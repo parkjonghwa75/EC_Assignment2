@@ -5,26 +5,26 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-//reference the EF models
+//model references for EF
 using EC_Assignment2.Models;
 using System.Web.ModelBinding;
 using System.Linq.Dynamic;
 
-namespace EC_Assignment2
+namespace EC_Assignment2.admin
 {
-    public partial class courses : System.Web.UI.Page
+    public partial class account : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                Session["SortColumn"] = "CourseID";
+                Session["SortColumn"] = "AccountID";
                 Session["SortDirection"] = "ASC";
-                GetCourses();
+                getAccounts();
             }
         }
 
-        protected void GetCourses()
+        protected void getAccounts()
         {
             //connect to EF
             using (comp2007Entities db = new comp2007Entities())
@@ -32,59 +32,62 @@ namespace EC_Assignment2
                 String SortString = Session["SortColumn"].ToString() + " " + Session["SortDirection"].ToString();
 
                 //query the students table using EF and LINQ
-                var Courses = from c in db.Courses
-                              select new { c.CourseID, c.Title, c.Credits, c.Department.Name};
+                var Accounts = from n in db.Accounts
+                               select new { n.AccountID, n.AccountName, n.Category.CategoryName,  n.isActive };
 
                 //bind the result to the gridview
 
-                grdCourses.DataSource = Courses.AsQueryable().OrderBy(SortString).ToList();
-                grdCourses.DataBind();
+                grdAccounts.DataSource = Accounts.AsQueryable().OrderBy(SortString).ToList();
+                grdAccounts.DataBind();
 
             }
         }
-        protected void grdCourses_RowDeleting(object sender, GridViewDeleteEventArgs e)
+
+
+        protected void grdAccounts_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             //store which row was clicked
             Int32 selectedRow = e.RowIndex;
 
             //get the selected StudentID using the grid's Data Key collection
-            Int32 CourseID = Convert.ToInt32(grdCourses.DataKeys[selectedRow].Values["CourseID"]);
+            Int32 AccountID = Convert.ToInt32(grdAccounts.DataKeys[selectedRow].Values["AccountID"]);
 
             //use EF to remove the selected student from the db
             using (comp2007Entities db = new comp2007Entities())
             {
 
-                Course c = (from objS in db.Courses
-                            where objS.CourseID == CourseID
+                Account a = (from objS in db.Accounts
+                             where objS.AccountID == AccountID
                             select objS).FirstOrDefault();
 
                 //do the delete
-                db.Courses.Remove(c);
+                db.Accounts.Remove(a);
                 db.SaveChanges();
             }
 
             //refresh the grid
-            GetCourses();
+            getAccounts();
         }
-        protected void grdCourses_PageIndexChanging(object sender, GridViewPageEventArgs e)
+
+        protected void grdAccounts_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            grdCourses.PageIndex = e.NewPageIndex;
-            GetCourses();
+            grdAccounts.PageIndex = e.NewPageIndex;
+            getAccounts();
         }
 
         protected void ddlPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             //set new page size
-            grdCourses.PageSize = Convert.ToInt32(ddlPageSize.SelectedValue);
-            GetCourses();
+            grdAccounts.PageSize = Convert.ToInt32(ddlPageSize.SelectedValue);
+            getAccounts();
         }
 
-        protected void grdCourses_Sorting(object sender, GridViewSortEventArgs e)
+        protected void grdAccounts_Sorting(object sender, GridViewSortEventArgs e)
         {
             //get the column to sort by
             Session["SortColumn"] = e.SortExpression;
 
-            GetCourses();
+            getAccounts();
 
 
             //toggle the sort direction
@@ -98,7 +101,7 @@ namespace EC_Assignment2
             }
         }
 
-        protected void grdCourses_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void grdAccounts_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (IsPostBack)
             {
@@ -106,18 +109,18 @@ namespace EC_Assignment2
                 {
                     Image SortImage = new Image();
 
-                    for (int i = 0; i <= grdCourses.Columns.Count - 1; i++)
+                    for (int i = 0; i <= grdAccounts.Columns.Count - 1; i++)
                     {
-                        if (grdCourses.Columns[i].SortExpression == Session["SortColumn"].ToString())
+                        if (grdAccounts.Columns[i].SortExpression == Session["SortColumn"].ToString())
                         {
                             if (Session["SortDirection"].ToString() == "DESC")
                             {
-                                SortImage.ImageUrl = "images/desc.jpg";
+                                SortImage.ImageUrl = "/images/desc.jpg";
                                 SortImage.AlternateText = "Sort Descending";
                             }
                             else
                             {
-                                SortImage.ImageUrl = "images/asc.jpg";
+                                SortImage.ImageUrl = "/images/asc.jpg";
                                 SortImage.AlternateText = "Sort Ascending";
                             }
 
@@ -129,5 +132,7 @@ namespace EC_Assignment2
 
             } // end of if
         } // end of grdCourses_RowDataBound
+
+
     }
 }
