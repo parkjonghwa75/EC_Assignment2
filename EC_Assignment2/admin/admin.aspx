@@ -18,11 +18,4 @@
             <li class="list-group-item"><a href="accountMod.aspx">Add new account</a></li>
         </ul>
     </div>
-    <div class="well">
-        <h3>Users</h3>
-        <ul class="list-group">
-            <li class="list-group-item"><a href="user.aspx">List users</a></li>
-            <li class="list-group-item"><a href="userMod.aspx">Add new user</a></li>
-        </ul>
-    </div>
 </asp:Content>

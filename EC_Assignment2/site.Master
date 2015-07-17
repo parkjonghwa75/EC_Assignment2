@@ -25,7 +25,7 @@
 
             <asp:PlaceHolder ID="plhPrivate" runat="server">
                 <li><a href="/admin/admin.aspx">Admin</a></li>
-                <li><a href="/admin/monthlyexpense.aspx">Manage monthly expenses</a></li>
+                <li><a href="/admin/monthlyexpenses.aspx">Manage monthly expenses</a></li>
                 <li><a href="/admin/review.aspx">Review and Analyze</a> </li>
                 <li><a href="/logout.aspx">Logout</a></li>
             </asp:PlaceHolder>

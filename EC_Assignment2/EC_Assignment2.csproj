@@ -105,6 +105,8 @@
     <Content Include="admin\categoryMod.aspx" />
     <Content Include="admin\course.aspx" />
     <Content Include="admin\department.aspx" />
+    <Content Include="admin\expenseMod.aspx" />
+    <Content Include="admin\monthlyexpenses.aspx" />
     <Content Include="login.aspx" />
     <Content Include="logout.aspx" />
     <Content Include="admin\main-menu.aspx" />
@@ -196,6 +198,20 @@
     </Compile>
     <Compile Include="admin\courses.aspx.designer.cs">
       <DependentUpon>courses.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\expenseMod.aspx.cs">
+      <DependentUpon>expenseMod.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\expenseMod.aspx.designer.cs">
+      <DependentUpon>expenseMod.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\monthlyexpenses.aspx.cs">
+      <DependentUpon>monthlyexpenses.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\monthlyexpenses.aspx.designer.cs">
+      <DependentUpon>monthlyexpenses.aspx</DependentUpon>
     </Compile>
     <Compile Include="default.aspx.cs">
       <DependentUpon>default.aspx</DependentUpon>

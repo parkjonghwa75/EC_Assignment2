@@ -18,7 +18,7 @@ namespace EC_Assignment2.admin
             //if loading the page for the first time, populate departments list
             if (!IsPostBack)
             {
-                Session["SortColumn"] = "CategoryID";
+                Session["SortColumn"] = "CategoryName";
                 Session["SortDirection"] = "ASC";
                 getCategory();
             }
